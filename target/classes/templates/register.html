@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #2c3e50;
+            padding: 10px 20px;
+            color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #ecf0f1;
+        }
+
+        .navbar-menu {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-menu li {
+            margin: 0 20px;
+        }
+
+        .navbar-menu li a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-menu li a:hover {
+            color: #f39c12;
+        }
+
+        .register {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .register-form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .register-form h1 {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            color: #333;
+        }
+
+        .register-form label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #555;
+        }
+
+        .register-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .register-form input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        .register-form input[type="submit"] {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 1.2em;
+        }
+
+        .register-form input[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        .confirm-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .confirm-box h1 {
+            margin-bottom: 15px;
+            color: #2ecc71;
+        }
+
+        .confirm-box p {
+            margin: 5px 0;
+            color: #333;
+        }
+
+        .confirm-box p strong {
+            color: #3498db;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-brand">Ella <span style="color: #f39c12;">estat’e</span></div>
+        <ul class="navbar-menu">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/properties-page">properties</a></li>
+            <li><a href="/blogs">Blog</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </nav>
+    
+    <div th:if="${confirmation == null}" class="register">
+        <div class="register-form">
+            <h1>Register</h1>
+            <form action="/processR" th:object="${user}" method="POST">
+                <label for="name">Username:</label>
+                <input type="text" id="name" name="name" th:field="*{name}" placeholder="Username" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" th:field="*{password}" placeholder="Password" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" th:field="*{email}" placeholder="Email" required>
+                
+                <label for="mobile">Mobile:</label>
+                <input type="tel" id="mobile" name="mobile" th:field="*{mobile}" placeholder="Mobile" required>
+                
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" th:field="*{address}" placeholder="Address" required>
+                
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+
+    <div th:if="${confirmation != null}" class="confirm-box">
+        <h1>Registration Confirmation</h1>
+        <p>Thank you for registering with us!</p>
+        <p><strong>Username:</strong> <span th:text="${user.name}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+        <p><strong>Mobile:</strong> <span th:text="${user.mobile}"></span></p>
+    </div>
+
+</body>
+</html>

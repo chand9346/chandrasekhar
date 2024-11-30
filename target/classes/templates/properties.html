@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        body {
+            /*     background-color: rgba(250, 235, 215, 0.633); */
+            /*   background-color: rgba(155, 176, 183, 0.478); */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #18445510;
+            ;
+        }
+
+        /* navbar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #1A4A5A;
+
+            padding: 0 20px;
+            color: white;
+        }
+
+        .navbar-brand {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .navbar-menu {
+            list-style: none;
+            display: flex;
+            margin: 15px;
+            padding: 5px;
+        }
+
+        .navbar-menu li {
+            margin: 0 15px;
+        }
+
+        .navbar-menu li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            transition: color 0.3s;
+        }
+
+        .navbar-menu li a:hover {
+            color: #ffcc00;
+        }
+
+        .navbar-search {
+            position: relative;
+        }
+
+        .navbar-search input {
+            padding: 5px;
+            border: none;
+            border-radius: 3px;
+        }
+
+        /* footer */
+        footer {
+            background-color: #1A4A5A;
+            color: #ddd;
+            padding: 20px 0;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .footer-section {
+            max-width: 200px;
+        }
+
+        .footer-section h2,
+        .footer-section h3 {
+            color: #f4c542;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: #f4c542;
+        }
+
+        .social-icons a {
+            color: #ddd;
+            margin-right: 10px;
+        }
+
+        .social-icons a:hover {
+            color: #f4c542;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin: 10px 0;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .footer-section ul li a:hover {
+            color: #f4c542;
+        }
+
+        .footer-section form {
+            display: flex;
+        }
+
+        .footer-section input[type="email"] {
+            padding: 5px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 2px;
+        }
+
+        .footer-section button {
+            padding: 5px 10px;
+            border: none;
+            background-color: #f4c542;
+            color: #222;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .footer-section button:hover {
+            background-color: #e3b733;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #111;
+        }
+
+        /* Styles for buttons and cards */
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .filter-buttons button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 20px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .filter-buttons button:hover {
+            background-color: #0056b3;
+        }
+
+        .filter-buttons button.active {
+            background-color: #0056b3;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px;
+            width: 300px;
+            overflow: hidden;
+            display: none;
+            /* Hide all cards initially */
+            background-color: white;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+
+
+        .card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        .card-details {
+            padding: 15px;
+        }
+
+        /* Animation for text */
+        .animate-text {
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .card:hover .animate-text {
+            color: #007bff;
+            /* Change color on hover */
+            transform: translateY(-5px);
+            /* Move up slightly */
+        }
+
+        /* Animation for icons */
+        .animate-icon {
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .card:hover .animate-icon {
+            color: #007bff;
+            /* Change color on hover */
+            transform: scale(1.2);
+            /* Enlarge slightly */
+        }
+
+        /* Button animations */
+        .card-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .card-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            /* Move up slightly on hover */
+        }
+
+        .animate-button {
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .fas {
+            color: #007BFF;
+        }
+
+        .fa-dollar-sign {
+            color: green;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+        }
+
+
+        .card-details {
+            padding: 10px;
+        }
+
+        .popup {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .popup-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%;
+            height: 300px;
+            display: flex;
+        }
+
+        .popup-image {
+            width: 50%;
+            height: 300px;
+        }
+
+        .popup-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            /* Arrange items in a column */
+            justify-content: center;
+            /* Center items vertically */
+            padding-left: 20px;
+            /* Space between image and details */
+        }
+
+        .popup-details p {
+            margin: 10px 0;
+            /* Add some spacing between each detail */
+        }
+
+        .popup-details h2 {
+            margin-bottom: 20px;
+            /* Add space between heading and first detail */
+        }
+
+        .popup-description {
+            margin-top: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .popup-content .close-button {
+            position: absolute;
+            top: 100px;
+            right: 30px;
+            color: #aaa;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+
+
+        }
+
+        .close-button {
+            color: #e60808;
+
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        /* popyp */
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 8% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            display: flex;
+        }
+
+        .image-container {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .details-container {
+            flex: 1;
+            padding: 0px 15px 10px 20px;
+        }
+
+        .amenities span {
+            margin-right: 10px;
+        }
+
+        .details-container .contact .fa-phone {
+            color: red;
+        }
+
+        .modern-house {
+            font-size: 30px;
+            color: rgb(6, 162, 239);
+        }
+
+        .view-location-btn {
+            background: radial-gradient(blue, black);
+            color: #fff;
+            padding: 13px 18px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .view-apointment-btn {
+            background: radial-gradient(orange, rgb(239, 11, 19));
+            color: white;
+            padding: 13px 30px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .button-container {
+            display: flex;
+            /* Enable flexbox */
+            align-items: center;
+            /* Center vertically */
+            justify-content: center;
+            /* Center horizontally */
+            height: 20px;
+            /* Full height of the viewport (optional) */
+        }
+
+        .login {
+            background-color: white;
+            border: 2px solid black;
+            color: black;
+            width: 80px;
+            font-size: 1em;
+            height: 30px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* style for admin add property */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+ 
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px;
+            width: 300px;
+            overflow: hidden;
+            display: none; /* Hide all cards initially */
+            background-color: white;
+            transition: transform 0.3s; /* Add transition for scaling */
+        }
+ 
+        .card:hover {
+            transform: scale(1.05);
+        }
+ 
+        .card:hover .card-image {
+            transform: scale(1.1);
+        }
+ 
+        .card-details {
+            padding: 15px;
+        }
+ 
+        /* Animation for text */
+        .animate-text {
+            transition: color 0.3s, transform 0.3s;
+        }
+ 
+        .card:hover .animate-text {
+            color: #007bff; /* Change color on hover */
+            transform: translateY(-5px); /* Move up slightly */
+        }
+ 
+        /* Animation for icons */
+        .animate-icon {
+            transition: color 0.3s, transform 0.3s;
+        }
+ 
+        .card:hover .animate-icon {
+            color: #007bff; /* Change color on hover */
+            transform: scale(1.2); /* Enlarge slightly */
+        }
+ 
+        /* Button animations */
+        .card-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+ 
+        .card-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px); /* Move up slightly on hover */
+        }
+ 
+        .animate-button {
+            transition: background-color 0.3s, transform 0.3s;
+        }
+ 
+        .fas {
+            color: #007BFF;
+        }
+ 
+        .fa-dollar-sign {
+            color: green;
+        }
+ 
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover; /* Ensure the image covers the area */
+        }
+ 
+        .card-details {
+            padding: 10px;
+        }
+    </style>
+    <title>Real Estate Cards</title>
+</head>
+
+<body>
+    <nav class="navbar" id="myHeader">
+        <div class="navbar-brand" style="color:white;">Ella <span style="color: #dfb162;">estat’e</span></div>
+        <ul class="navbar-menu">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/properties">properties</a></li>
+            <li><a href="/blogs">Blog</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+
+        </ul>
+    </nav>
+    <div class="filter-buttons">
+        <button onclick="filterProperties('buy')" class="active">Buy</button>
+        <button onclick="filterProperties('rent')">Rent</button>
+        <button onclick="filterProperties('sell')">Sell</button>
+    </div>
+
+    <!-- listings section -->
+    <div class="card-container">
+        <div class="card" data-type="buy" style="display: block;">
+            <img th:src="@{/images/prop1.jpg}" alt="Property 1" class="card-image">
+            <div class="card-details">
+                <h3>Beautiful Family Home</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 3 Beds •
+                    <i class="fas fa-bath"></i> 2 Baths •
+                    <i class="fas fa-ruler-combined"></i> 1,500 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $350,000
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/prop1.jpg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+        <div class="card" data-type="buy" style="display: block;">
+            <img th:src="@{images/buy1.jpg}" alt="Property 1" class="card-image">
+            <div class="card-details">
+                <h3>Beautiful Family Home</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 3 Beds •
+                    <i class="fas fa-bath"></i> 2 Baths •
+                    <i class="fas fa-ruler-combined"></i> 1,500 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $350,000
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/buy1.jpg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+        <div class="card" data-type="buy" style="display: block;">
+            <img th:src="@{/images/buy2.jpg}" alt="Property 1" class="card-image">
+            <div class="card-details">
+                <h3>Beautiful Family Home</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 3 Beds •
+                    <i class="fas fa-bath"></i> 2 Baths •
+                    <i class="fas fa-ruler-combined"></i> 1,500 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $350,000
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/buy2.jpg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+        <div class="card" data-type="buy" style="display: block;">
+            <img th:src="@{/images/buy3.jpg}" alt="Property 1" class="card-image">
+            <div class="card-details">
+                <h3>Beautiful Family Home</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 3 Beds •
+                    <i class="fas fa-bath"></i> 2 Baths •
+                    <i class="fas fa-ruler-combined"></i> 1,500 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $350,000
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/buy3.jpg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+        <div class="card" data-type="buy" style="display: block;">
+            <img th:src="@{/images/buy4.jpg}" alt="Property 1" class="card-image">
+            <div class="card-details">
+                <h3>Beautiful Family Home</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 3 Beds •
+                    <i class="fas fa-bath"></i> 2 Baths •
+                    <i class="fas fa-ruler-combined"></i> 1,500 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $350,000
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/buy4.jpg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+        <div class="card" data-type="buy" style="display: block;">
+            <img th:src="@{/images/buy5.jpg}" alt="Property 1" class="card-image">
+            <div class="card-details">
+                <h3>Beautiful Family Home</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 3 Beds •
+                    <i class="fas fa-bath"></i> 2 Baths •
+                    <i class="fas fa-ruler-combined"></i> 1,500 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $350,000
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/buy5.jpg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+        <div class="card" data-type="buy" style="display: block;">
+            <img th:src="@{/images/buy6.jpg}" alt="Property 1" class="card-image">
+            <div class="card-details">
+                <h3>Beautiful Family Home</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 3 Beds •
+                    <i class="fas fa-bath"></i> 2 Baths •
+                    <i class="fas fa-ruler-combined"></i> 1,500 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $350,000
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/buy6.jpg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+        <div class="card" data-type="buy" style="display: block;">
+            <img th:src="@{/images/buy7.jpg}" alt="Property 1" class="card-image">
+            <div class="card-details">
+                <h3>Beautiful Family Home</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 3 Beds •
+                    <i class="fas fa-bath"></i> 2 Baths •
+                    <i class="fas fa-ruler-combined"></i> 1,500 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $350,000
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/buy7.jpg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+
+
+
+
+        <div class="card" data-type="rent">
+            <img th:src="@{/images/prop11.jpeg}" alt="Property 2" class="card-image">
+            <div class="card-details">
+                <h3>Modern Apartment</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 2 Beds •
+                    <i class="fas fa-bath"></i> 1 Bath •
+                    <i class="fas fa-ruler-combined"></i> 900 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $1,200/month
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/prop11.jpeg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+        <div class="card" data-type="rent">
+            <img th:src="@{/images/image-c1.jpg}" alt="Property 2" class="card-image">
+            <div class="card-details">
+                <h3>Modern Apartment</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 2 Beds •
+                    <i class="fas fa-bath"></i> 1 Bath •
+                    <i class="fas fa-ruler-combined"></i> 900 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $1,200/month
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/image-c1.jpg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+        <div class="card" data-type="rent">
+            <img th:src="@{/images/prop1.jpg}" alt="Property 2" class="card-image">
+            <div class="card-details">
+                <h3>Modern Apartment</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 2 Beds •
+                    <i class="fas fa-bath"></i> 1 Bath •
+                    <i class="fas fa-ruler-combined"></i> 900 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $1,200/month
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/prop1.jpg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+        <div class="card" data-type="rent">
+            <img th:src="@{/images/prop2.jpeg}" alt="Property 2" class="card-image">
+            <div class="card-details">
+                <h3>Modern Apartment</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 2 Beds •
+                    <i class="fas fa-bath"></i> 1 Bath •
+                    <i class="fas fa-ruler-combined"></i> 900 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $1,200/month
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/prop2.jpeg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+        <div class="card" data-type="rent">
+            <img th:src="@{/images/prop3.jpg}" alt="Property 2" class="card-image">
+            <div class="card-details">
+                <h3>Modern Apartment</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 2 Beds •
+                    <i class="fas fa-bath"></i> 1 Bath •
+                    <i class="fas fa-ruler-combined"></i> 900 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $1,200/month
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/prop3.jpg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+        <div class="card" data-type="rent">
+            <img th:src="@{/images/prop4.jpeg}" alt="Property 2" class="card-image">
+            <div class="card-details">
+                <h3>Modern Apartment</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 2 Beds •
+                    <i class="fas fa-bath"></i> 1 Bath •
+                    <i class="fas fa-ruler-combined"></i> 900 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $1,200/month
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/prop4.jpeg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+        <div class="card" data-type="rent">
+            <img th:src="@{/images/prop5.jpg}" alt="Property 2" class="card-image">
+            <div class="card-details">
+                <h3>Modern Apartment</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 2 Beds •
+                    <i class="fas fa-bath"></i> 1 Bath •
+                    <i class="fas fa-ruler-combined"></i> 900 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $1,200/month
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/prop5.jpg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+        <div class="card" data-type="rent">
+            <img th:src="@{/images/prop6.jpg}" alt="Property 2" class="card-image">
+            <div class="card-details">
+                <h3>Modern Apartment</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 2 Beds •
+                    <i class="fas fa-bath"></i> 1 Bath •
+                    <i class="fas fa-ruler-combined"></i> 900 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $1,200/month
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/prop6.jpg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="card" data-type="sell">
+            <img th:src="@{/images/prop13.jpg}" alt="Property 3" class="card-image">
+            <div class="card-details">
+                <h3>Luxury Condo</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 2 Beds •
+                    <i class="fas fa-bath"></i> 2 Baths •
+                    <i class="fas fa-ruler-combined"></i> 1,200 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $450,000
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/prop13.jpg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+
+        <div class="card" data-type="sell">
+            <img th:src="@{/images/prop12.jpg}" alt="Property 3" class="card-image">
+            <div class="card-details">
+                <h3>Luxury Condo</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 2 Beds •
+                    <i class="fas fa-bath"></i> 2 Baths •
+                    <i class="fas fa-ruler-combined"></i> 1,200 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $450,000
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/prop12.jpg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+
+        <div class="card" data-type="sell">
+            <img th:src="@{/images/prop11.jpeg}" alt="Property 3" class="card-image">
+            <div class="card-details">
+                <h3>Innovate Luxary House</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 3 Beds •
+                    <i class="fas fa-bath"></i> 2 Baths •
+                    <i class="fas fa-ruler-combined"></i> 1,240 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $350,000
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/prop11.jpeg',
+                        title: 'Innovate Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$350,000',
+                        beds: '3',
+                        baths: '2',
+                        area: '1,240 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+
+        <div class="card" data-type="sell">
+            <img th:src="@{/images/prop10.png}" alt="Property 3" class="card-image">
+            <div class="card-details">
+                <h3>New Innovation Luxary House</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 2 Beds •
+                    <i class="fas fa-bath"></i> 2 Baths •
+                    <i class="fas fa-ruler-combined"></i> 1,400 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $420,000
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/prop10.png',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$420,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,400 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+
+        <div class="card" data-type="sell">
+            <img th:src="@{/images/prop9.png}" alt="Property 3" class="card-image">
+            <div class="card-details">
+                <h3>modern-house Condo</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 3 Beds •
+                    <i class="fas fa-bath"></i> 3 Baths •
+                    <i class="fas fa-ruler-combined"></i> 1,200 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $450,000
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/prop9.png',
+                        title: 'Modern Condo',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '3',
+                        baths: '3',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+
+        <div class="card" data-type="sell">
+            <img th:src="@{/images/prop8.jpeg}" alt="Property 3" class="card-image">
+            <div class="card-details">
+                <h3>Well Defined House</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 2 Beds •
+                    <i class="fas fa-bath"></i> 2 Baths •
+                    <i class="fas fa-ruler-combined"></i> 1,100 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $250,000
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/prop8.jpeg',
+                        title: 'Well Defined House',
+                        description: 'This is a beautifully designed modern house with 2 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$250,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,100 sq ft',
+                        contact:'+931 468 1599'
+
+                })">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+
+        <div class="card" data-type="sell">
+            <img th:src="@{/images/image-c.jpg}" alt="Property 3" class="card-image">
+            <div class="card-details">
+                <h3>Medium Luxary House</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 2 Beds •
+                    <i class="fas fa-bath"></i> 2 Baths •
+                    <i class="fas fa-ruler-combined"></i> 1,300 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $350,000
+                </p>
+                <button class="card-button" onclick="showPopup({
+                     imageSrc: '/static/images/image-c.jpg',
+                        title: 'Medium Luxary House',
+                        description: 'This is a beautifully designed modern house with 2 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$350,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,300 sq ft',
+                        contact:'+931 468 1599'
+                }
+
+                )">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+
+        <div class="card" data-type="sell">
+            <img th:src="@{/images/prop6.jpg}" alt="Property 3" class="card-image">
+            <div class="card-details">
+                <h3>New Innovation Luxary House</h3>
+                <p>
+                    <i class="fas fa-bed"></i> 2 Beds •
+                    <i class="fas fa-bath"></i> 2 Baths •
+                    <i class="fas fa-ruler-combined"></i> 1,200 sqft
+                </p>
+                <p>
+                    <i class="fas fa-dollar-sign"></i> $450,000
+                </p>
+                <button class="card-button" onclick="showPopup({
+                 imageSrc: '/static/images/prop6.jpg',
+                        title: 'New Innovation Luxary House',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$450,000',
+                        beds: '2',
+                        baths: '2',
+                        area: '1,200 sq ft',
+                        contact:'+931 468 1599'
+                }
+                )">View Details</button>
+                 <button  class="card-button"><a href="{% url 'register' %}" style="color: white;list-style-type: none;text-decoration: none;">Book Now</a></button>
+            </div>
+        </div>
+
+        <!-- Add more cards with data-type="buy", "rent", or "sell" as needed -->
+    </div>
+
+    <!-- listing section dynamic -->
+
+
+
+    <!-- pop up  -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close-button" onclick="closePopup()">&times;</span>
+            <img id="propertyImage" src="" alt="Property 1" class="popup-image">
+
+            <div class="popup-details">
+
+                <h2 id="propertyTitle">Beautiful Family Home</h2>
+                <p class="popup-description" id="propertyDescription">Description: This beautiful family home offers a
+                    perfect blend of comfort and style.</p>
+                <p><i class="fas fa-bed"></i> <span id="propertyBeds">3 Beds</span></p>
+                <p><i class="fas fa-bath"></i> <span id="propertyBaths">2 Baths</span></p>
+                <p><i class="fas fa-ruler-combined"></i> <span id="propertyArea">1,500 sqft</span></p>
+                <p><i class="fas fa-dollar-sign"></i> <span id="propertyPrice">$350,000</span></p>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <!-- footer section -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h2>Ella estat’e</h2>
+                <p>ella Orr'e is a WordPress theme to build Interior websites. It has good features and you will love.
+                </p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">About Gaille</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Faq</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>(1800) 574 9687</p>
+                <p>256, Stella Orr'e, New York 24</p>
+                <p>Email: <a href="mailto:info@stellaorre.com">info@stellaorre.com</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Get Special offers & Discounts</p>
+                <form action="#">
+                    <input type="email" placeholder="Enter your email address">
+                    <button type="submit">SUBSCRIBE</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; Templates Hub</p>
+        </div>
+    </footer>
+    <!-- footer section end -->
+    <script>
+        /* for header */
+        window.onscroll = function () { myFunction() };
+
+        var header = document.getElementById("myHeader");
+        var sticky = header.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+
+        // JavaScript for filtering properties
+        function filterProperties(type) {
+            var cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                if (card.getAttribute('data-type') === type) {
+                    card.style.display = 'block'; // Show the card if it matches the type
+                } else {
+                    card.style.display = 'none'; // Hide the card if it doesn't match
+                }
+            });
+
+            // Remove 'active' class from all buttons
+            document.querySelectorAll('.filter-buttons button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Add 'active' class to the clicked button
+            event.target.classList.add('active');
+        }
+
+        // Popup functions
+        function showPopup(propertyId) {
+            var popup = document.getElementById("popup");
+            popup.style.display = "block";
+        }
+
+        function closePopup() {
+            var popup = document.getElementById("popup");
+            popup.style.display = "none";
+        }
+
+        /* view popup details */
+
+        function showPopup(propertyData) {
+            document.getElementById('propertyImage').src = propertyData.imageSrc;
+            document.getElementById('propertyTitle').textContent = propertyData.title;
+
+            document.getElementById('propertyDescription').textContent = propertyData.description;
+            document.getElementById('propertyPrice').textContent = propertyData.price;
+            document.getElementById('propertyBeds').textContent = propertyData.beds;
+            document.getElementById('propertyBaths').textContent = propertyData.baths;
+            document.getElementById('propertyArea').textContent = propertyData.area;
+            document.getElementById('popup').style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = "none";
+        }
+
+    </script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>
+
+
+<!--  <button class="view-details" onclick="openModal({
+                        imageSrc: '/static/images/home_images/house1.jpg',
+                        title: 'New Innovation Luxary House',
+                        location:'Near NMR bulidngs, fitzee resturant, viskapatnam,pin:600541.',
+                        description: 'This is a beautifully designed modern house with 3 bedrooms and 2 bathrooms. In this house they are included best interior designs and quality wood are used for entire house , two car parking space also available. and one swimmingfool also available 24/7 water facility available.  ',
+                        price: '$600,000',
+                        beds: '3',
+                        baths: '2',
+                        area: '1600 sq ft',
+                        contact:'+931 468 1599'
+                    })"> View Details</button>
+
+
+
+        <div id="popupModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <div class="modal-body">
+                    <div class="image-container">
+                        <img id="propertyImage" src="" alt="Property Image">
+                    </div>
+                    <div class="details-container">
+                        <h3 class="modern-house" id="propertyTitle">Modern House</h3>
+                        <h5 id="propertyLocation">Viskapatnam</h5>
+                        <p id="propertyDescription">This is a beautifully designed modern house with 3 bedrooms and 2
+                            bathrooms.</p>
+                        <h3>Price: <span id="propertyPrice">$500,000</span></h3>
+                        <h4>Beds :<span id="propertyBeds">3 Beds</span></h4>
+                        <h4>Baths : <span id="propertyBaths">2 Baths</span></h4>
+                        <h4>Space :<span id="propertyArea">1500 sq ft</span></h4>
+                        <button class="view-location-btn" onclick="showMapModal()">view location</button>
+                        <button class="view-apointment-btn" onclick="showMeetModal()">Shedule</button>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+                      function openModal(propertyData) {
+            document.getElementById('propertyImage').src = propertyData.imageSrc;
+            document.getElementById('propertyTitle').textContent = propertyData.title;
+            document.getElementById('propertyLocation').textContent = propertyData.location;
+            document.getElementById('propertyDescription').textContent = propertyData.description;
+            document.getElementById('propertyPrice').textContent = propertyData.price;
+            document.getElementById('propertyBeds').textContent = propertyData.beds;
+            document.getElementById('propertyBaths').textContent = propertyData.baths;
+            document.getElementById('propertyArea').textContent = propertyData.area;
+            // document.getElementById('propertyContact').textContent = propertyData.contact;
+            document.getElementById('popupModal').style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('popupModal').style.display = "none";
+        }
+
+
+        .modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.8); 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 8% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-body {
+    display: flex;
+}
+
+.image-container {
+    flex: 1;
+    padding: 10px;
+}
+.image-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.details-container {
+    flex: 1;
+    padding: 0px 15px 10px 20px;
+}
+
+.amenities span {
+    margin-right: 10px;
+} 
+.details-container .contact .fa-phone{
+    color: red;
+}
+.modern-house{
+    font-size: 30px;
+    color: rgb(6, 162, 239);
+}
+.view-location-btn{
+    background:radial-gradient(blue,black);
+    color: #fff;
+    padding: 13px 18px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.view-apointment-btn{
+    background: radial-gradient(orange,rgb(239, 11, 19));
+    color: white;
+    padding: 13px 30px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    font-size: 18px;
+} -->

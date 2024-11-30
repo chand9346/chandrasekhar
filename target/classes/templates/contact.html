@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conatct</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* general styling */
+        body {
+            background-color: #18445550;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+
+
+        }
+
+
+        /* navbar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #1A4A5A;
+            padding: 0 20px;
+            color: black;
+            z-index: 1;
+        }
+
+        .navbar-brand {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .navbar-menu {
+            list-style: none;
+            display: flex;
+            margin: 15px;
+            padding: 5px;
+        }
+
+        .navbar-menu li {
+            margin: 0 15px;
+        }
+
+        .navbar-menu li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            transition: color 0.3s;
+        }
+
+        .navbar-menu li a:hover {
+            color: #ffcc00;
+        }
+
+        /* footer */
+        footer {
+            background-color: #1A4A5A;
+            color: #ddd;
+            padding: 20px 0;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .footer-section {
+            max-width: 200px;
+        }
+
+        .footer-section h2,
+        .footer-section h3 {
+            color: #f4c542;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: #f4c542;
+        }
+
+        .social-icons a {
+            color: #ddd;
+            margin-right: 10px;
+        }
+
+        .social-icons a:hover {
+            color: #f4c542;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin: 10px 0;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .footer-section ul li a:hover {
+            color: #f4c542;
+        }
+
+        .footer-section form {
+            display: flex;
+        }
+
+        .footer-section input[type="email"] {
+            padding: 5px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 2px;
+        }
+
+        .footer-section button {
+            padding: 5px 10px;
+            border: none;
+            background-color: #f4c542;
+            color: transparent;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .footer-section button:hover {
+            background-color: #e3b733;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 10px 0;
+            background-color: transparent;
+        }
+
+
+        /* contact-image */
+        .contact-image {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            background: url('images/prop10.png') no-repeat center center;
+            background-size: cover;
+        }
+
+        .contact-image::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(16, 15, 15, 0.556);
+        }
+
+        .contact-inner {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background-color: rgba(72, 82, 86, 0.379);
+            width: 87%;
+            height: 80px;
+            color: white;
+            font-size: 2em;
+            z-index: 1;
+            padding: 100px;
+        }
+
+        .contact-inner span:first-child {
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+
+        .contact-inner span:last-child {
+            font-size: 4em;
+            margin-top: 10px;
+
+        }
+
+        /* container-contact */
+        .container-contact {
+            display: flex;
+            background-color: #fff;
+            width: 100%;
+            max-width: 100%;
+            margin: auto;
+        }
+
+        .contact-info {
+            padding: 60px;
+            padding-left: 160px;
+
+
+        }
+
+        .contact-info h1 {
+            margin-top: 0;
+            font-size: 24px;
+        }
+
+        .contact-info p {
+            margin: 10px 0;
+        }
+
+        .contact-info form {
+            margin-top: 20px;
+        }
+
+        .contact-info input,
+        .contact-info textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .contact-info button {
+            padding: 10px 20px;
+            background-color: #ffcc00;
+            border: none;
+            color: black;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .contact-info button:hover {
+            background-color: #4cae4c;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            text-decoration: none;
+            color: #333;
+            margin-right: 15px;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 800px;
+            position: relative;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        #map iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            /* Remove any border if present */
+        }
+
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        .login {
+            background-color: white;
+            border: 2px solid black;
+            color: black;
+            width: 80px;
+            font-size: 1em;
+            height: 30px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body style="background-color: #18445550;">
+    <nav class="navbar" id="myHeader">
+        <div class="navbar-brand" style="color: white;">Ella <span style="color: #dfb162;">estat’e</span></div>
+        <ul class="navbar-menu">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/properties">properties</a></li>
+            <li><a href="/blogs">Blog</a></li>
+            <li><a href="/properties-page">properties</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+
+        </ul>
+    </nav>
+
+    <div class="contact-image">
+        <div class="contact-inner">
+            <span>Contact Us</span>
+            <span class="home" style="color: #dfb162;font-size: 18px;"> Home > about us</span>
+        </div>
+    </div>
+
+    <div class="container-contact">
+        <div class="contact-info">
+            <h1>Contact us</h1>
+            <p>We're open for any suggestion or just to have a chat</p>
+            <p><strong>ADDRESS:</strong> 198 West 21th Street, Visakhapatnam</p>
+            <p><strong>EMAIL:</strong> <a href="mailto:info@ellaestate  .com">info@ellaestate.com</a></p>
+            <p><strong>PHONE:</strong> +1 235 2355 98</p>
+            <form class="contact-form">
+                <input type="text" name="name" placeholder="Name">
+                <!--   <input type="text" name="fullname" placeholder="Fullname">
+            <input type="password" name="pwd" placeholder="password"> -->
+                <!--    <input type="password" name="con_pwd" placeholder="Confirm-password"> -->
+                <input type="email" name="email" placeholder="Email">
+                <input type="number" name="number" placeholder="Mobile Number">
+                <!--        <input type="number" name="age" placeholder="Enter your age"> -->
+                <input type="text" name="location" placeholder="Enter your location">
+                <textarea name="message" placeholder="Enter your Message here"></textarea>
+                <button type="submit">Register</button>
+            </form>
+            <div class="social-links">
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+                <a href="#">Dribbble</a>
+            </div>
+        </div>
+        <div class="map-container">
+            <div id="map">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d486415.17796144023!2d82.93291604843914!3d17.73905113073495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a39431389e6973f%3A0x92d9c20395498468!2sVisakhapatnam%2C%20Andhra%20Pradesh!5e0!3m2!1sen!2sin!4v1723201503136!5m2!1sen!2sin"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load the Google Maps API -->
+    <script>
+        function initMap() {
+            // The location of the target
+            var location = { lat: 17.7364087, lng: 83.3042618 };
+
+            // The map, centered at the target location
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 14,
+                center: location
+            });
+
+            // The marker, positioned at the target location
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+        }
+    </script>
+    <script async defer
+        src="https://www.google.com/maps/place/Leo+Tech+Wave+IT+%26+BPO+Services/@8.0952396,77.9295177,4.63z/data=!4m14!1m7!3m6!1s0x3a39433b549a5b1b:0x59d735a9e8f9bb4f!2sLeo+Tech+Wave+IT+%26+BPO+Services!8m2!3d17.7364087!4d83.3042618!16s%2Fg%2F11hd5dy9nf!3m5!1s0x3a39433b549a5b1b:0x59d735a9e8f9bb4f!8m2!3d17.7364087!4d83.3042618!16s%2Fg%2F11hd5dy9nf?entry=ttu"></script>
+
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h2>Ella estat’e</h2>
+                <p>Ella estat'e is a WordPress theme to build Real Estate websites. It has good features and you will
+                    love.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">About Gaille</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Testinomials</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>(1800) 574 9687</p>
+                <p>198 West 21th Street, Visakhapatnam</p>
+                <p>Email: <a href="mailto:info@ellaestate.com">info@ellaestate.com</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Get Special offers & Discounts</p>
+                <form action="#">
+                    <input type="email" placeholder="Enter your email address">
+                    <button type="submit" style="color: black;">SUBSCRIBE</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; Templates Hub</p>
+        </div>
+    </footer>
+    <script>
+        /* for header */
+        window.onscroll = function () { myFunction() };
+
+        var header = document.getElementById("myHeader");
+        var sticky = header.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+
+    </script>
+</body>
+
+</html>

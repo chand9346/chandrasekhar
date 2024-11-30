@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs</title>
+    <style>
+        /* Base Styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            background-color: white;
+        }
+
+        .login {
+            background-color: white;
+            border: 2px solid black;
+            color: black;
+            width: 80px;
+            font-size: 1em;
+            height: 30px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #1A4A5A;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: black;
+        }
+
+        .navbar-brand span {
+            color: #dfb162;
+        }
+
+        .navbar-menu {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-menu li {
+            margin: 0 15px;
+        }
+
+        .navbar-menu li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            transition: color 0.3s;
+        }
+
+        .navbar-menu li a:hover {
+            color: #ffcc00;
+        }
+
+        /* Blog Section Styles */
+        .blogs-main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .blog-div {
+            /*   background:radial-gradient(antiquewhite,rgb(163, 143, 86)); */
+            background-color: white;
+            border-radius: 10px;
+            /*  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3); */
+            margin: 20px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 260px;
+        }
+
+        .blog-div:hover {
+            transform: translateY(-5px);
+            box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .blog-img img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .blog-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .blog-content span {
+            display: block;
+            margin-bottom: 10px;
+            color: gray;
+        }
+
+        .blog-content span.title {
+            color: black;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .blog-content span.comments {
+            color: #ffcc00;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .blog-div {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+
+        /* footer */
+        footer {
+            background-color: #1A4A5A;
+            color: #ddd;
+            padding: 20px 0;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .footer-section {
+            max-width: 200px;
+        }
+
+        .footer-section h2,
+        .footer-section h3 {
+            color: #f4c542;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: #f4c542;
+        }
+
+        .social-icons a {
+            color: #ddd;
+            margin-right: 10px;
+        }
+
+        .social-icons a:hover {
+            color: #f4c542;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin: 10px 0;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .footer-section ul li a:hover {
+            color: #f4c542;
+        }
+
+        .footer-section form {
+            display: flex;
+        }
+
+        .footer-section input[type="email"] {
+            padding: 5px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 2px;
+        }
+
+        .footer-section button {
+            padding: 5px 10px;
+            border: none;
+            background-color: #f4c542;
+            color: #222;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .footer-section button:hover {
+            background-color: #e3b733;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #111;
+        }
+
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar" id="myHeader">
+        <div class="navbar-brand" style="color: white;">Ella <span>estat’e</span></div>
+        <ul class="navbar-menu">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/properties-page">properties</a></li>
+            <li><a href="/blogs">Blog</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </nav>
+
+    <div class="blogs-main">
+        <!-- First Row -->
+        <div class="blog-div">
+            <div class="blog-img">
+                <img th:src="@{/images/image_1.jpg.webp}" alt="Blog Image 1">
+            </div>
+            <div class="blog-content">
+                <span>Admin Dec. 01, 2020 <span class="comments">3 comments</span></span>
+                <span class="title">New Home Sales Picked Up in December</span>
+            </div>
+        </div>
+        <div class="blog-div">
+            <div class="blog-img">
+                <img th:src="@{/images/image_2.jpg.webp}" alt="Blog Image 2">
+            </div>
+            <div class="blog-content">
+                <span>Admin Dec. 01, 2020 <span class="comments">3 comments</span></span>
+                <span class="title">New Home Sales Picked Up in December</span>
+            </div>
+        </div>
+        <div class="blog-div">
+            <div class="blog-img">
+                <img th:src="@{/images/image_3.jpg.webp}" alt="Blog Image 3">
+            </div>
+            <div class="blog-content">
+                <span>Admin Dec. 01, 2020 <span class="comments">3 comments</span></span>
+                <span class="title">New Home Sales Picked Up in December</span>
+            </div>
+        </div>
+        <div class="blog-div">
+            <div class="blog-img">
+                <img th:src="@{/images/image_4.jpg.webp}" alt="Blog Image 4">
+            </div>
+            <div class="blog-content">
+                <span>Admin Dec. 01, 2020 <span class="comments">3 comments</span></span>
+                <span class="title">New Home Sales Picked Up in December</span>
+            </div>
+        </div>
+
+        <!-- Second Row -->
+        <div class="blog-div">
+            <div class="blog-img">
+                <img th:src="@{/images/image_5.jpg.webp}" alt="Blog Image 5">
+            </div>
+            <div class="blog-content">
+                <span>Admin Dec. 02, 2020 <span class="comments">5 comments</span></span>
+                <span class="title">The Housing Market Trends to Watch</span>
+            </div>
+        </div>
+        <div class="blog-div">
+            <div class="blog-img">
+                <img th:src="@{/images/image_6.jpg.webp}" alt="Blog Image 6">
+            </div>
+            <div class="blog-content">
+                <span>Admin Dec. 03, 2020 <span class="comments">4 comments</span></span>
+                <span class="title">How to Find the Perfect Home</span>
+            </div>
+        </div>
+        <div class="blog-div">
+            <div class="blog-img">
+                <img th:src="@{/images/image_7.jpg.webp}" alt="Blog Image 7">
+            </div>
+            <div class="blog-content">
+                <span>Admin Dec. 04, 2020 <span class="comments">2 comments</span></span>
+                <span class="title">Mortgage Rates Are Declining</span>
+            </div>
+        </div>
+        <div class="blog-div">
+            <div class="blog-img">
+                <img th:src="@{/images/image_8.jpg.webp}" alt="Blog Image 8">
+            </div>
+            <div class="blog-content">
+                <span>Admin Dec. 05, 2020 <span class="comments">6 comments</span></span>
+                <span class="title">Real Estate Investment Tips</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h2>Stella Orr’e</h2>
+                <p>Stella Orr'e is a WordPress theme to build Interior websites. It has good features and you will love.
+                </p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">About Gaille</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Faq</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>(1800) 574 9687</p>
+                <p>256, Stella Orr'e, New York 24</p>
+                <p>Email: <a href="mailto:info@stellaorre.com">info@stellaorre.com</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Get Special offers & Discounts</p>
+                <form action="#">
+                    <input type="email" placeholder="Enter your email address">
+                    <button type="submit">SUBSCRIBE</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; Templates Hub</p>
+        </div>
+    </footer>
+    <script>
+        /* for header */
+        window.onscroll = function () { myFunction() };
+
+        var header = document.getElementById("myHeader");
+        var sticky = header.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+
+    </script>
+</body>
+
+</html>

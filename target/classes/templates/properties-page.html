@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+          /* general styling */
+          body {
+         /*    background-color: #18445550; */
+         background-color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* navbar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #1A4A5A;
+            padding: 0 20px;
+            color: black;
+        }
+
+        .navbar-brand {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .navbar-menu {
+            list-style: none;
+            display: flex;
+            margin: 15px;
+            padding: 5px;
+        }
+
+        .navbar-menu li {
+            margin: 0 15px;
+        }
+
+        .navbar-menu li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            transition: color 0.3s;
+        }
+
+        .navbar-menu li a:hover {
+            color: #ffcc00;
+        }
+
+        .navbar-search {
+            position: relative;
+        }
+
+        .navbar-search input {
+            padding: 5px;
+            border: none;
+            border-radius: 3px;
+        }
+
+        /* footer */
+        footer {
+            background-color: #1A4A5A;
+            color: #ddd;
+            padding: 20px 0;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .footer-section {
+            max-width: 200px;
+        }
+
+        .footer-section h2,
+        .footer-section h3 {
+            color: #f4c542;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: #f4c542;
+        }
+
+        .social-icons a {
+            color: #ddd;
+            margin-right: 10px;
+        }
+
+        .social-icons a:hover {
+            color: #f4c542;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin: 10px 0;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .footer-section ul li a:hover {
+            color: #f4c542;
+        }
+
+        .footer-section form {
+            display: flex;
+        }
+
+        .footer-section input[type="email"] {
+            padding: 5px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 2px;
+        }
+
+        .footer-section button {
+            padding: 5px 10px;
+            border: none;
+            background-color: #f4c542;
+            color: transparent;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .footer-section button:hover {
+            background-color: #e3b733;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 10px 0;
+            background-color: transparent;
+        }
+        .btn-group {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    
+        .filter-btn{
+            width: 8%;
+            height: 40px;
+            border: none;
+            background-color: skyblue;
+          margin-left: 10px;
+        }
+
+        .btn-group .btn {
+            margin: 0 5px;
+            height:40;
+           
+        }
+    
+        .filter-btn {
+            border-radius: 5px;
+        }
+    
+        .filter-btn.active {
+            background-color: #dfb162;
+            border-color: #dfb162;
+            color: white;
+        }
+    
+        /* Card styling */
+        .col-md-4 {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            width: 700px;
+        }
+    
+        .cards {
+            width: 100%;  /* Keep the card width 100% of its parent */
+            max-width: 650px;  /* Set a maximum width for the cards */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            border: none;
+            border-radius: 8px;
+            background-color: white;
+            height: 500px;  /* Maintain a consistent height */
+            display: flex;
+            flex-direction: column;
+        }
+    
+        .cards img {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+        }
+    
+        .cards:hover {
+            transform: scale(1.05);
+        }
+    
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+    
+        .property-title {
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    
+        .property-details {
+            font-size: 1.12rem;
+            color: #777;
+            padding-left: 10px;
+            flex: 1;
+        }
+    
+        .property-price {
+            font-size: 1.2rem;
+            color: green;
+            padding-left: 10px;
+        }
+    
+        .image-btn {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: space-between;
+            padding: 10px;
+        }
+    
+        .carousel-item img {
+            width: 90%;
+            height: 500px;
+            object-fit: cover;
+            object-position: center;
+        }
+    
+        /* When a card is hidden, remove it from the layout */
+        .hidden-card {
+            display: none;
+        }
+    
+        /* Active filter button */
+        .filter-btn.active {
+            background-color: #dfb162;
+            border-color: #dfb162;
+            color: white;
+        }
+    
+        /* Grid layout */
+        #cakeCards {
+            display: flex;
+            
+    gap: 10px; /* Space between cards */
+          
+        }
+    
+        .col-md-4 {
+           
+            max-width: 320px; /* Keep the card's max width */
+        }
+    
+
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="myHeader">
+        <div class="navbar-brand">Ella <span style="color: #dfb162;">estat’e</span></div>
+        <ul class="navbar-menu">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/properties">properties</a></li>
+            <li><a href="/blogs">Blog</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </nav>
+    <div class="btn-group">
+        <button class="filter-btn" onclick="filterCakes('Buy', this)">Buy</button>
+        <button class="filter-btn" onclick="filterCakes('Sell', this)">Sell</button>
+        <button class="filter-btn" onclick="filterCakes('Rent', this)">Rent</button>
+      
+    </div>
+    <div class="container mt-5">
+        <div class="row" id="cakeCards">
+            <div class="col-md-4" th:each="property : ${propertys}">
+                <div class="cards card-item" th:data-cake-type="${property.propertyType}">
+                    <img th:src="@{${property.image_url}}" class="card-img-top" alt="Cake Image" />
+                    <div class="card-body">
+                        <h5 class="property-title" th:text="${property.propertyName}"></h5>
+                        <p class="property-details">
+                            <span th:text="'Beds: ' + ${property.bedsCount}"></span><br/>
+                            <span th:text="'Bath: ' + ${property.bathsCount}"></span><br/>
+                            <span th:text="'Squarefeet: ' + ${property.sqrfeetRange} + '/5'"></span><br/>
+                           
+                        </p>
+                        <p class="property-price" th:text="'Price: ₹ ' + ${property.price}" style="font-weight: 600;"></p>
+                        <div class="image-btn">
+                            <button class="btn btn-success" style="width: 35%;font-size: 12px;" onclick="window.location.href='/register';">Order Now</button>
+
+                            <button class="btn btn-info" style="width: 35%;height: 40px;font-size: 12px;"
+                                    th:onclick="'openPropertyDetails(' + ${property.id} + ')'"
+                                    data-bs-toggle="modal" data-bs-target="#propertyDetailsModal">View Images</button>
+                        </div>
+                    </div>
+                  </div>
+          </div>
+        </div>
+     </div>
+
+
+
+       <!-- Modal for Property Details -->
+    <div class="modal fade" id="propertyDetailsModal" tabindex="-1" aria-labelledby="propertyDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="propertyDetailsModalLabel">Property Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Bootstrap Carousel for images -->
+                    <div id="propertyImagesCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" id="carouselInner"></div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#propertyImagesCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#propertyImagesCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+     <!-- Bootstrap JS and dependencies -->
+
+
+     <script>
+         // Filter cakes by type
+ function filterCakes(propertyType, button) {
+     // Remove 'active' class from all buttons
+     document.querySelectorAll('.filter-btn').forEach(btn => {
+         btn.classList.remove('active');
+     });
+ 
+     // Add 'active' class to the clicked button
+     button.classList.add('active');
+ 
+     // Loop through the cake cards and filter by cakeType
+     document.querySelectorAll('.card-item').forEach(card => {
+         const type = card.getAttribute('data-cake-type').trim();
+ 
+         if (propertyType === 'All' || type.toLowerCase() === propertyType.toLowerCase()) {
+             // Show matching cakes
+             card.closest('.col-md-4').classList.remove('hidden-card');
+         } else {
+             // Hide non-matching cakes
+             card.closest('.col-md-4').classList.add('hidden-card');
+         }
+     });
+ }
+ 
+        // Load images into the modal
+         function openPropertyDetails(id) {
+             console.log("Opening details for cake ID:", id);
+             const imageUrls = {
+                1: [
+            "https://img2.rentola.com/Sk3deCSDVsNkvlMckV7pThtq5Ig=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fschepvastgoedmanagers.nl%2Fwoningfotos%2F5%2F3%2F8%2F6%2F3840%2F53868388_Knipsel-2.jpg",
+            "https://img2.rentola.com/Sk3deCSDVsNkvlMckV7pThtq5Ig=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fschepvastgoedmanagers.nl%2Fwoningfotos%2F5%2F3%2F8%2F6%2F3840%2F53868388_Knipsel-2.jpg",
+            "https://img2.rentola.com/Sk3deCSDVsNkvlMckV7pThtq5Ig=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fschepvastgoedmanagers.nl%2Fwoningfotos%2F5%2F3%2F8%2F6%2F3840%2F53868388_Knipsel-2.jpg",
+            "https://img2.rentola.com/DWXpBCmM80HEjajj5bUNMUexULc=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fschepvastgoedmanagers.nl%2Fwoningfotos%2F7%2F4%2F5%2F2%2F3840%2F74523877_fd1e18a10925c1ee1606c187f3a3fade.jpg",
+            "https://img2.rentola.com/_eCOc2sO14pMlwhV7L5YRJ2cEl0=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fschepvastgoedmanagers.nl%2Fwoningfotos%2F7%2F4%2F5%2F2%2F3840%2F74523880_010e6f3ec8384c8e2af227340d0164c4.jpg"
+
+          ],
+          7: [
+                   "https://img2.rentola.com/2vTENyctK0rs79qWLKcwj9Xu_eA=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fwww.bazos.cz%2Fimg%2F4%2F164%2F191190164.jpg",
+                   "https://img2.rentola.com/2vTENyctK0rs79qWLKcwj9Xu_eA=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fwww.bazos.cz%2Fimg%2F4%2F164%2F191190164.jpg",
+                   "https://img2.rentola.com/6ZUghsSIkWoWnACQln49agS-EX8=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fwww.bazos.cz%2Fimg%2F3%2F164%2F191190164.jpg",
+                   "https://img2.rentola.com/eZgML0dhsj4LwrTmCmxpfVT0BPg=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fwww.bazos.cz%2Fimg%2F5%2F164%2F191190164.jpg",
+
+          ],
+          8: [
+           "https://img2.rentola.com/PvWnxEzz_m2-GfcDzJtsGzvTscY=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn.krbo.eu%2Fhomesinflorence%2Fimages%2F3%2F120%2F15436591726085.jpg",
+           "https://img2.rentola.com/PvWnxEzz_m2-GfcDzJtsGzvTscY=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn.krbo.eu%2Fhomesinflorence%2Fimages%2F3%2F120%2F15436591726085.jpg",
+           "https://img2.rentola.com/FCnUlX9fRq-A0cj-CmtWOvJmnPk=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn.krbo.eu%2Fhomesinflorence%2Fimages%2F3%2F120%2F15436591794440.jpg",
+           "https://img2.rentola.com/FCnUlX9fRq-A0cj-CmtWOvJmnPk=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn.krbo.eu%2Fhomesinflorence%2Fimages%2F3%2F120%2F15436591794440.jpg",
+           "https://img2.rentola.com/FCnUlX9fRq-A0cj-CmtWOvJmnPk=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn.krbo.eu%2Fhomesinflorence%2Fimages%2F3%2F120%2F15436591794440.jpg"
+          ],
+          9: [
+            "https://img2.rentola.com/PzumgXBA-daEX6rrlJbLKTbydwo=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn-static-new.uniplaces.com%2Fproperty-photos%2F961efdcb54165f762d4a17346c97e967af75d6916317e709977d4532ce20f65c%2Fx-large.jpg",
+            "https://img2.rentola.com/PzumgXBA-daEX6rrlJbLKTbydwo=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn-static-new.uniplaces.com%2Fproperty-photos%2F961efdcb54165f762d4a17346c97e967af75d6916317e709977d4532ce20f65c%2Fx-large.jpg",
+            "https://img2.rentola.com/PzumgXBA-daEX6rrlJbLKTbydwo=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn-static-new.uniplaces.com%2Fproperty-photos%2F961efdcb54165f762d4a17346c97e967af75d6916317e709977d4532ce20f65c%2Fx-large.jpg",
+            "https://img2.rentola.com/XsoHFCsj8t5ltrQtQxucy_XqluI=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn-static-new.uniplaces.com%2Fproperty-photos%2F8c881ea75bae2ce44f00306b2818d12e63873a912621c069c52b39796d48f1bc%2Fx-large.jpg",
+            "https://img2.rentola.com/iAliemRYzT4UBC5aZfcKOBN2a1k=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn-static-new.uniplaces.com%2Fproperty-photos%2Fee630b719b2fab906487199b961f22eaa7e1016f4d47eff8ca96b4da40522ed6%2Fx-large.jpg",
+            "https://img2.rentola.com/x3GX1QAIw1b9_2rQSUyO-PrhlY8=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn-static-new.uniplaces.com%2Fproperty-photos%2F191705a3d97543b74ef6217fbfc679ee3e8899db9428489f5f7736760733527c%2Fx-large.jpg",
+            "https://img2.rentola.com/x3GX1QAIw1b9_2rQSUyO-PrhlY8=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn-static-new.uniplaces.com%2Fproperty-photos%2F191705a3d97543b74ef6217fbfc679ee3e8899db9428489f5f7736760733527c%2Fx-large.jpg"
+          ],
+          10: [
+           "https://img2.rentola.com/6RIcN3JeA_abKVsW6RKF2vHVJ0M=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fvenumfilestore.blob.core.windows.net%2Fpub%2F148377f0%2F5dde%2F47df%2Fab01%2Fc460e99f80b9%2F%24l%2Fimg-20200803-wa0019.jpg",
+           "https://img2.rentola.com/6RIcN3JeA_abKVsW6RKF2vHVJ0M=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fvenumfilestore.blob.core.windows.net%2Fpub%2F148377f0%2F5dde%2F47df%2Fab01%2Fc460e99f80b9%2F%24l%2Fimg-20200803-wa0019.jpg",
+           "https://img2.rentola.com/6RIcN3JeA_abKVsW6RKF2vHVJ0M=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fvenumfilestore.blob.core.windows.net%2Fpub%2F148377f0%2F5dde%2F47df%2Fab01%2Fc460e99f80b9%2F%24l%2Fimg-20200803-wa0019.jpg",
+           "https://img2.rentola.com/6RIcN3JeA_abKVsW6RKF2vHVJ0M=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fvenumfilestore.blob.core.windows.net%2Fpub%2F148377f0%2F5dde%2F47df%2Fab01%2Fc460e99f80b9%2F%24l%2Fimg-20200803-wa0019.jpg",
+           "https://img2.rentola.com/6RIcN3JeA_abKVsW6RKF2vHVJ0M=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fvenumfilestore.blob.core.windows.net%2Fpub%2F148377f0%2F5dde%2F47df%2Fab01%2Fc460e99f80b9%2F%24l%2Fimg-20200803-wa0019.jpg",
+           "https://img2.rentola.com/6RIcN3JeA_abKVsW6RKF2vHVJ0M=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fvenumfilestore.blob.core.windows.net%2Fpub%2F148377f0%2F5dde%2F47df%2Fab01%2Fc460e99f80b9%2F%24l%2Fimg-20200803-wa0019.jpg",
+           "https://img2.rentola.com/6RIcN3JeA_abKVsW6RKF2vHVJ0M=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fvenumfilestore.blob.core.windows.net%2Fpub%2F148377f0%2F5dde%2F47df%2Fab01%2Fc460e99f80b9%2F%24l%2Fimg-20200803-wa0019.jpg"
+          ],
+          11: [
+            "https://img2.rentola.com/d0R06KCukqGgGYDY3y1ETi2uDYc=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fwww.gabinohome.com%2Fassets%2Fclients%2Fc-31018%2Fa-58196%2F816962-63f9b40df405d.jpg",
+            "https://img2.rentola.com/d0R06KCukqGgGYDY3y1ETi2uDYc=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fwww.gabinohome.com%2Fassets%2Fclients%2Fc-31018%2Fa-58196%2F816962-63f9b40df405d.jpg",
+            "https://img2.rentola.com/4LN8uJ808UDwuC0t731bwAj14D4=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fwww.gabinohome.com%2Fassets%2Fclients%2Fc-31018%2Fa-58196%2F816962-63f9b3d26e66e.jpg",
+            "https://img2.rentola.com/W1xc0wFt88H7ZF4RtjmhuL_FGiI=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fwww.gabinohome.com%2Fassets%2Fclients%2Fc-31018%2Fa-58196%2F816962-63f9b40e0a07d.jpg",
+          
+          ],
+          12: [
+            "https://img2.rentola.com/ygOMNtqppsXsrGpDYySlH8wweEE=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fvenumfilestore.blob.core.windows.net%2Fpub%2Ff8c30ed1%2F5364%2F412a%2Fbb07%2F1553353ddf05%2F%24l%2F6504_m.jpg",
+            "https://img2.rentola.com/ygOMNtqppsXsrGpDYySlH8wweEE=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fvenumfilestore.blob.core.windows.net%2Fpub%2Ff8c30ed1%2F5364%2F412a%2Fbb07%2F1553353ddf05%2F%24l%2F6504_m.jpg",
+            "https://img2.rentola.com/MiXRzwBoNOWXWXy4b9cSUNhDIGk=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fvenumfilestore.blob.core.windows.net%2Fpub%2Fa55d4a85%2F651d%2F4ad8%2Fbbe1%2F12ef8a6a496f%2F%24l%2F7274_m.jpg",
+            "https://img2.rentola.com/MiXRzwBoNOWXWXy4b9cSUNhDIGk=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fvenumfilestore.blob.core.windows.net%2Fpub%2Fa55d4a85%2F651d%2F4ad8%2Fbbe1%2F12ef8a6a496f%2F%24l%2F7274_m.jpg",
+            "https://img2.rentola.com/MiXRzwBoNOWXWXy4b9cSUNhDIGk=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fvenumfilestore.blob.core.windows.net%2Fpub%2Fa55d4a85%2F651d%2F4ad8%2Fbbe1%2F12ef8a6a496f%2F%24l%2F7274_m.jpg",
+            "https://img2.rentola.com/MiXRzwBoNOWXWXy4b9cSUNhDIGk=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fvenumfilestore.blob.core.windows.net%2Fpub%2Fa55d4a85%2F651d%2F4ad8%2Fbbe1%2F12ef8a6a496f%2F%24l%2F7274_m.jpg"
+          ],
+          13: [
+            "https://img2.rentola.com/gEiD3xl0OLfduU9jFG1eYL-rUQc=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn-static-new.uniplaces.com%2Fproperty-photos%2Fd221d5064962af677a9eb22770d3e91800d1b1514b2bac0f44bef4ef915224ee%2Fx-large.jpg",
+            "https://img2.rentola.com/gEiD3xl0OLfduU9jFG1eYL-rUQc=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn-static-new.uniplaces.com%2Fproperty-photos%2Fd221d5064962af677a9eb22770d3e91800d1b1514b2bac0f44bef4ef915224ee%2Fx-large.jpg",
+            "https://img2.rentola.com/peAirNq1GTrz3zcDYcNbPad9kYQ=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn-static-new.uniplaces.com%2Fproperty-photos%2Faeb6c7245ddfaffb33d7dd39e2374e6005a1bb1cf8053cb48a75a8aa9c2a073b%2Fx-large.jpg",
+            "https://img2.rentola.com/peAirNq1GTrz3zcDYcNbPad9kYQ=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn-static-new.uniplaces.com%2Fproperty-photos%2Faeb6c7245ddfaffb33d7dd39e2374e6005a1bb1cf8053cb48a75a8aa9c2a073b%2Fx-large.jpg"
+          ],
+
+           16:[
+            "https://img2.rentola.com/C_bH1bIkxpvqnzt5yw5UMO88vXs=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fphotos.spotahome.com%2Fpt_640_480%2F262ad464a4e6671dac7684c6eecf2e7612dfa2e2ae5436113bf53c97.jpg",
+            "https://img2.rentola.com/C_bH1bIkxpvqnzt5yw5UMO88vXs=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fphotos.spotahome.com%2Fpt_640_480%2F262ad464a4e6671dac7684c6eecf2e7612dfa2e2ae5436113bf53c97.jpg",
+            "https://img2.rentola.com/CFb9U7ax3nrZ_EKZ8J8wJ2YV9cw=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fphotos.spotahome.com%2Fpt_640_480%2F80b6e70de844c3580e3d5bdc4acb584e37e3464d9ce2d43d499eebea.jpg",
+            "https://img2.rentola.com/CFb9U7ax3nrZ_EKZ8J8wJ2YV9cw=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fphotos.spotahome.com%2Fpt_640_480%2F80b6e70de844c3580e3d5bdc4acb584e37e3464d9ce2d43d499eebea.jpg",
+            "https://img2.rentola.com/CFb9U7ax3nrZ_EKZ8J8wJ2YV9cw=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fphotos.spotahome.com%2Fpt_640_480%2F80b6e70de844c3580e3d5bdc4acb584e37e3464d9ce2d43d499eebea.jpg"
+           ],
+
+          17:[
+            "https://img2.rentola.com/A7jTBtMK4-Bt3LCNrGndkYVL5DI=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn.krbo.eu%2Fapartmentsflorence%2Fimages%2F3%2F398%2F15288900544046.jpg",
+            "https://img2.rentola.com/A7jTBtMK4-Bt3LCNrGndkYVL5DI=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn.krbo.eu%2Fapartmentsflorence%2Fimages%2F3%2F398%2F15288900544046.jpg",
+            "https://img2.rentola.com/rgakqwaIJP6fkZgL99j6ktnn5g0=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn.krbo.eu%2Fapartmentsflorence%2Fimages%2F3%2F398%2F15288900796997.jpg",
+            "https://img2.rentola.com/rgakqwaIJP6fkZgL99j6ktnn5g0=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn.krbo.eu%2Fapartmentsflorence%2Fimages%2F3%2F398%2F15288900796997.jpg",
+            "https://img2.rentola.com/rgakqwaIJP6fkZgL99j6ktnn5g0=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn.krbo.eu%2Fapartmentsflorence%2Fimages%2F3%2F398%2F15288900796997.jpg",
+            "https://img2.rentola.com/XcmAXtVdUU5UNd7R8JVYK25PhCE=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn.krbo.eu%2Fapartmentsflorence%2Fimages%2F3%2F398%2F15288900882835.jpg",
+            "https://img2.rentola.com/SrTNlTLtML6-ifQV8swiivReHF0=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fcdn.krbo.eu%2Fapartmentsflorence%2Fimages%2F3%2F398%2F1528890078654.jpg"
+          ],
+          15:[
+            "https://img2.rentola.com/tRefkQS8yZGQnTjeB9QIk_NETO8=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fphotos.spotahome.com%2Fpt_640_480%2F32b3537e2b23a7b00c380ff1bc809a44d71b020227218abf7220208f.jpg",
+            "https://img2.rentola.com/tRefkQS8yZGQnTjeB9QIk_NETO8=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fphotos.spotahome.com%2Fpt_640_480%2F32b3537e2b23a7b00c380ff1bc809a44d71b020227218abf7220208f.jpg",
+            "https://img2.rentola.com/Gir5v_E7j7TShf_lFRxmI-XlMPw=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fphotos.spotahome.com%2Fpt_640_480%2Fa67e7b218590d0a4d811a9cf0ccf2ec5f08cb5f9091c16a05f84e723.jpg",
+            "https://img2.rentola.com/0RYyaN5WQUqix2NIMtyC54LQ948=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fphotos.spotahome.com%2Fpt_640_480%2Ff756aebc5728412d8b31bfcea84a56d29003c0d2b0f791c4aedcbafb.jpg",
+            "https://img2.rentola.com/0RYyaN5WQUqix2NIMtyC54LQ948=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fphotos.spotahome.com%2Fpt_640_480%2Ff756aebc5728412d8b31bfcea84a56d29003c0d2b0f791c4aedcbafb.jpg"
+          ],
+          14:[
+            "https://img2.rentola.com/8RgbXsylXH_09UFBtni9PMOrQ1M=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fmedia-resize.immowebstatic.be%2Fclassifieds%2F5b92069a-4c6a-4548-89a3-133a7696a76c%2F736x736%2F71656b1c53befda175078a090b93f441.jpg",
+
+            "https://img2.rentola.com/DBubaRsgCvZzoHKS1n053jJ6JPQ=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fmedia-resize.immowebstatic.be%2Fclassifieds%2F5b92069a-4c6a-4548-89a3-133a7696a76c%2F736x736%2Fdfa935cbfdf48fb6ed1d1e2bb9620392.jpg",
+
+            "https://img2.rentola.com/xH4lW61QIH5GMGQFvKxoyVHEsSQ=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fmedia-resize.immowebstatic.be%2Fclassifieds%2F5b92069a-4c6a-4548-89a3-133a7696a76c%2F736x736%2F356960a4cb035bd528324796364614dc.jpg",
+            "https://img2.rentola.com/grpt1lPdTsy7eiqJxoeBF5yplxY=/fit-in/635x405/filters:format(webp):fill(white)/https%3A%2F%2Fmedia-resize.immowebstatic.be%2Fclassifieds%2F5b92069a-4c6a-4548-89a3-133a7696a76c%2F736x736%2Fbc50f0c2e227aa054677103be95abcf7.jpg"
+          ]
+        };
+
+const carouselInner = document.getElementById('carouselInner');
+carouselInner.innerHTML = ''; // Clear previous images
+
+if (imageUrls[id]) {
+imageUrls[id].forEach((url, index) => {
+    const div = document.createElement('div');
+    div.classList.add('carousel-item');
+    if (index === 0) div.classList.add('active');
+    
+    const img = document.createElement('img');
+    img.src = url;
+    img.classList.add('d-block', 'w-100');
+    div.appendChild(img);
+
+    carouselInner.appendChild(div);
+});
+
+}
+}
+
+
+        /* for header */
+        window.onscroll = function () { myFunction() };
+
+        var header = document.getElementById("myHeader");
+        var sticky = header.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+</script>
+    
+</body>
+</html>

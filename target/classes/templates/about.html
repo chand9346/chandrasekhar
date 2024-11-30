@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Document</title>
+    <style>
+        /* general styling */
+        body {
+        /*     background-color: #18445550; */
+        background-color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* navbar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #1A4A5A;
+            padding: 0 20px;
+            color: black;
+        }
+
+        .navbar-brand {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .navbar-menu {
+            list-style: none;
+            display: flex;
+            margin: 15px;
+            padding: 5px;
+        }
+
+        .navbar-menu li {
+            margin: 0 15px;
+        }
+
+        .navbar-menu li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            transition: color 0.3s;
+        }
+
+        .navbar-menu li a:hover {
+            color: #ffcc00;
+        }
+
+        .navbar-search {
+            position: relative;
+        }
+
+        .navbar-search input {
+            padding: 5px;
+            border: none;
+            border-radius: 3px;
+        }
+
+        /* footer */
+        footer {
+            background-color: #1A4A5A;
+            color: #ddd;
+            padding: 20px 0;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .footer-section {
+            max-width: 200px;
+        }
+
+        .footer-section h2,
+        .footer-section h3 {
+            color: #f4c542;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: #f4c542;
+        }
+
+        .social-icons a {
+            color: #ddd;
+            margin-right: 10px;
+        }
+
+        .social-icons a:hover {
+            color: #f4c542;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin: 10px 0;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .footer-section ul li a:hover {
+            color: #f4c542;
+        }
+
+        .footer-section form {
+            display: flex;
+        }
+
+        .footer-section input[type="email"] {
+            padding: 5px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 2px;
+        }
+
+        .footer-section button {
+            padding: 5px 10px;
+            border: none;
+            background-color: #f4c542;
+            color: transparent;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .footer-section button:hover {
+            background-color: #e3b733;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 10px 0;
+            background-color: transparent;
+        }
+
+        /* about */
+        .interior-work {
+            /* Light background for better contrast */
+            color: #333;
+            padding: 50px 20px;
+
+
+        }
+
+        .container {
+            display: flex;
+            margin: 50px 20px;
+            /*  flex-wrap: wrap;
+            align-items: center; */
+            /*   justify-content: center; */
+        }
+
+        .image {
+            height: 400px;
+            width: 500px;
+        }
+
+        .image img {
+
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+        }
+
+        /*        .image, .content {
+    flex-basis: 50%; 
+    flex-grow: 1;
+}
+ */
+        .content {
+            flex: 1;
+            padding: 20px 0;
+            padding-left: 40px;
+
+
+        }
+
+        .content h2 {
+            color: #1A4A5A;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .content p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .feature i {
+            font-size: 40px;
+            color: #1A4A5A;
+            margin-bottom: 10px;
+        }
+
+        .features {
+            display: flex;
+
+        }
+
+        .feature {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+        }
+
+        .cta p {
+            margin: 10px 0;
+        }
+
+        /* about-persons */
+        .our-team {
+            /* Changed to a light color for better contrast */
+            color: #333;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .container-ab {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .our-team h2 {
+            color: #1A4A5A;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .our-team p {
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        .team-members {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .team-member {
+            /*  background-color: #575656c0; */
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px;
+            max-width: 220px;
+            text-align: center;
+        }
+
+        .team-member img {
+            width: 100%;
+            height: auto;
+        }
+
+        .team-member h3 {
+            color: #1A4A5A;
+            font-size: 20px;
+            margin: 10px 0 5px;
+        }
+
+        .team-member p {
+            font-size: 16px;
+            margin: 0 0 10px;
+            color: black;
+        }
+
+        /* value stats */
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            padding: 20px;
+            /*      background-color: #f4f7f9; */
+        }
+
+        .stat-item {
+            margin: 30px;
+        }
+
+        .stat-item h2 {
+            margin: 0;
+            font-size: 3em;
+            color: #1A4A5A;
+        }
+
+        .stat-item p {
+            margin: 5px 0 0 0;
+            font-size: 1em;
+            color: #666;
+        }
+
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        .login {
+            background-color: white;
+            border: 2px solid black;
+            color: black;
+            width: 80px;
+            font-size: 1em;
+            height: 30px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .button-container {
+            display: flex;
+            /* Enable flexbox */
+            align-items: center;
+            /* Center vertically */
+            justify-content: center;
+            /* Center horizontally */
+            height: 20px;
+            /* Full height of the viewport (optional) */
+        }
+
+        .button-container {
+            display: flex;
+            /* Enable flexbox */
+            align-items: center;
+            /* Center vertically */
+            justify-content: center;
+            /* Center horizontally */
+            height: 20px;
+            /* Full height of the viewport (optional) */
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar" id="myHeader">
+        <div class="navbar-brand">Ella <span style="color: #dfb162;">estat’e</span></div>
+        <ul class="navbar-menu">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/properties-page">properties</a></li>
+            <li><a href="/blogs">Blog</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </nav>
+
+    <section class="interior-work">
+        <div class="container">
+            <div class="image">
+                <img th:src="@{/images/about-images.jpg}" alt="Interior Design">
+            </div>
+            <div class="content">
+                <h2 style="color: #1A4A5A;">Why Choose Us for </h2>
+                <p>To give you a home that lasts, we bring you only the best in everything — quality raw materials,
+                    state-of-the-art manufacturing, rigorous quality checks, professional installations and transparent
+                    prices.</p>
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-star"></i>
+                        <p>Superior Quality</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fa-solid fa-user-plus"></i>
+                        <p>Professional Team</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-thumbs-up"></i>
+                        <p>Unmatched Warranty</p>
+                    </div>
+                </div>
+                <div class="cta">
+                    <p>Get in touch with us to design your dream home</p>
+                    <p>Talk to our design expert and get your designs</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <div class="stats-container">
+        <div class="stat-item">
+            <h2>8 Year</h2>
+            <p>Material Warranty</p>
+        </div>
+        <div class="stat-item">
+            <h2>2500+</h2>
+            <p>Homes Completed</p>
+        </div>
+        <div class="stat-item">
+            <h2>200+</h2>
+            <p>Sold Out</p>
+        </div>
+        <div class="stat-item">
+            <h2>45 Days</h2>
+            <p>Project Delivery</p>
+        </div>
+    </div>
+
+    <section class="our-team">
+        <div class="container-ab">
+            <h2>Our Team</h2>
+            <p>Our caregivers are trained specifically to provide in-home care.</p>
+            <div class="team-members">
+                <div class="team-member">
+                    <img th:src="@{/images/team-1.jpg}" alt="Merry Desulva">
+                    <h3>Merry Desulva</h3>
+                    <p>Manager</p>
+                </div>
+                <div class="team-member">
+                    <img th:src="@{/images/team-2.jpg}" alt="Roseen">
+                    <h3>Roseen</h3>
+                    <p>Broker</p>
+                </div>
+                <div class="team-member">
+                    <img th:src="@{/images/team-3.jpg}" alt="Merry Desulva">
+                    <h3>Merry Desulva</h3>
+                    <p>Director</p>
+                </div>
+                <div class="team-member">
+                    <img th:src="@{/images/team-4.jpg}" alt="Roseen">
+                    <h3>Roseen</h3>
+                    <p>Coordinator</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h2>Ella estat’e</h2>
+                <p>Ella estat'e is a WordPress theme to build Real Estate websites. It has good features and you will
+                    love.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">About Gaille</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Testinomials</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>(1800) 574 9687</p>
+                <p>198 West 21th Street, Visakhapatnam</p>
+                <p>Email: <a href="mailto:info@ellaestate.com">info@ellaestate.com</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Get Special offers & Discounts</p>
+                <form action="#">
+                    <input type="email" placeholder="Enter your email address">
+                    <button type="submit" style="color: black;">SUBSCRIBE</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; Templates Hub</p>
+        </div>
+    </footer>
+    <script>
+        /* for header */
+        window.onscroll = function () { myFunction() };
+
+        var header = document.getElementById("myHeader");
+        var sticky = header.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+
+    </script>
+</body>
+
+</html>

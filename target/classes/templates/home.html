@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" >
+    <title>Home Page</title>
+    <style>
+        *{
+            padding: 0;
+            margin:0;
+        }
+      
+      
+    
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        /* Include the CSS defined above */
+        /* navbar */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            /*     background-color: rgba(155, 176, 183, 0.478); */
+            /* background-color: #c1e1a7; */
+      /*       background-color: #18445550; */
+      background-color: white;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #1a4a5afd;
+            padding: 0 20px;
+            color: #fff;
+            z-index: 1;
+
+        }
+
+        .navbar-brand {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .navbar-menu {
+            list-style: none;
+            display: flex;
+            margin: 15px;
+            padding: 5px;
+        }
+
+        .navbar-menu li {
+            margin: 0 15px;
+        }
+
+        .navbar-menu li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            transition: color 0.3s;
+        }
+
+        .navbar-menu li a:hover {
+            color: #ffcc00;
+        }
+
+        .navbar-search {
+            position: relative;
+        }
+
+        .navbar-search input {
+            padding: 5px;
+            border: none;
+            border-radius: 3px;
+        }
+
+        /* home background image */
+        /* .hero-section {
+    position: relative;
+    background-image: url('images/home2.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: left;
+}
+ */
+        /* .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+} */
+
+        .hero-content {
+            position: relative;
+            max-width: 600px;
+            padding: 10px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero-content h1 {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: slideInLeft 1.5s ease-in-out;
+            font-family: 'Brush Script MT', cursive;
+        }
+
+        .hero-content p {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: slideInLeft 2s ease-in-out;
+            font-family: 'Brush Script MT', cursive;
+        }
+
+        .cta-button {
+            background-color: #ffcc00;
+            border: none;
+            padding: 10px 20px;
+            color: #1A4A5A;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        .cta-button:hover {
+            background-color: #e6b800;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* home awesome place code */
+
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1A4A5A;
+            margin-bottom: 40px;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 300px;
+            margin: 20px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-image {
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s;
+        }
+
+        .card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h2 {
+            margin: 0;
+            color: #ffcc00;
+        }
+
+        .card-content p {
+            font-size: 1em;
+            margin: 15px 0;
+            color: white;
+        }
+
+        .card-content a {
+            /*  color: #ffcc00; */
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+            color: transparent;
+        }
+
+        .card-content a:hover {
+            color: #e6b800;
+        }
+
+        /* for services-home */
+        .container2 {
+            max-width: 1060px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .services {
+            display: flex;
+
+            justify-content: center;
+            /* Center the service cards horizontally */
+            align-items: center;
+            /* Center the service cards vertically */
+        }
+
+        .service {
+            height: 250px;
+            width: 220px;
+            margin: 10px;
+            background-color: rgba(211, 211, 211, 0.466);
+            border-radius: 8px;
+            /* Added border-radius */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+            color: black;
+        }
+
+        .fa-building,
+        .fa-home,
+        .fa-industry:hover {
+            color: #fff;
+        }
+
+        .service:hover {
+            transform: translateY(-5px);
+            background-color: #1A4A5A;
+            color: white;
+        }
+
+        .service .icon {
+            font-size: 48px;
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+
+        .service h2 {
+            margin-bottom: 5px;
+        }
+
+        .service p {
+            margin-bottom: 15px;
+        }
+
+        .service h2:hover {
+            color: white;
+        }
+
+        .service .button {
+            background-color: #ffc107;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .service .button:hover {
+            background-color: #e0a800;
+        }
+
+        /* footer section */
+
+        footer {
+            background-color: #1A4A5A;
+            color: #ddd;
+            margin-top: 30px;
+            padding: 20px 0;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+
+        }
+
+        .footer-section {
+            max-width: 200px;
+        }
+
+        .footer-section h2,
+        .footer-section h3 {
+            color: #dfb162;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: #f4c542;
+        }
+
+        .social-icons a {
+            color: #ddd;
+            margin-right: 10px;
+        }
+
+        .social-icons a:hover {
+            color: #f4c542;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin: 10px 0;
+        }
+
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .footer-section ul li a:hover {
+            color: #f4c542;
+        }
+
+        .footer-section form {
+            display: flex;
+        }
+
+        .footer-section input[type="email"] {
+            padding: 5px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 2px;
+        }
+
+        .footer-section button {
+            padding: 5px 10px;
+            border: none;
+            background-color: #f4c542;
+
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .footer-section button:hover {
+            background-color: #e3b733;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 10px 0;
+
+        }
+
+        /* testinomials */
+
+
+        .testimonials {
+            text-align: center;
+            padding: 10px 20px;
+        }
+
+        .testimonials h2 {
+            font-size: 2.5em;
+            color: #1A4A5A;
+            margin-bottom: 20px;
+        }
+
+        .testimonials h2 span {
+            color: #fff;
+        }
+
+        .testimonial-slider {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            overflow: hidden;
+        }
+
+        .testimonial {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 300px;
+            text-align: left;
+            position: relative;
+        }
+
+        .quote-icon {
+            font-size: 2em;
+            color: #1A4A5A;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .testimonial p {
+            margin-top: 50px;
+            font-size: 1em;
+            line-height: 1.5;
+            color: #666;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .author-info h3 {
+            margin: 0;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .author-info span {
+            font-size: 0.9em;
+            color: #1A4A5A;
+        }
+
+        /* icons */
+        .fa-building,
+        .fa-home,
+        .fa-industry {
+            color: black;
+            font-size: 2em;
+            /* Increase the size of the icons */
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .fa-building:hover,
+        .fa-home:hover,
+        .fa-industry:hover {
+            color: white;
+            /* Change this to your desired hover color */
+            transform: scale(1.2);
+            /* Increase size slightly on hover */
+        }
+
+
+        /* slide */
+        .containerslide {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            margin-top: 60px;
+            margin-left: 60px;
+        }
+
+        .carousel-container {
+            flex: 1;
+            position: relative;
+            max-width: 50%;
+            overflow: hidden;
+            margin-right: 20px;
+            /* Space between carousel and hero section */
+        }
+
+        .carousel-slide {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: auto;
+            flex-shrink: 0;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .carousel-button.prev {
+            left: 10px;
+        }
+
+        .carousel-button.next {
+            right: 10px;
+        }
+
+        .hero-section {
+            flex: 1;
+            max-width: 50%;
+        }
+
+        .hero-content {
+            padding: 20px;
+        }
+
+        .hero-content h1 {
+            color: #1A4A5A;
+            /* Updated to match your inline style */
+            font-size: 68px;
+            /* Increased font size */
+            /*   margin-bottom: 10px; */
+            text-align: start;
+        }
+
+        .hero-content p {
+            color: #666;
+            font-size: 1.8em;
+            /* Increased font size */
+            line-height: 1.6;
+            font-family: 'Brush Script MT', cursive;
+        }
+
+        .cta-button {
+            background-color: #f4c542;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            /* Enable flexbox */
+            align-items: center;
+            /* Center vertically */
+            justify-content: center;
+            /* Center horizontally */
+            height: 20px;
+            /* Full height of the viewport (optional) */
+        }
+
+        .login {
+            background-color: white;
+            border: 2px solid black;
+            color: black;
+            width: 80px;
+            font-size: 1em;
+            height: 30px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .parallax {
+  /* The image used */
+  background-image: url("https://images.squarespace-cdn.com/content/v1/6631186f4432597eab077d10/1719923648269-JT169ATBPRMIPDEPMUEW/NQS_MIDWAY_AMEYALLI_VIEW+04_HOTSPRINGS+AT+DOME_ER.jpg?format=2500w");
+
+  /* Set a specific height */
+  min-height: 500px; 
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.parallax2 {
+  /* The image used */
+  background-image: url("https://images.squarespace-cdn.com/content/v1/6631186f4432597eab077d10/1715126615316-LSXONXBZ2EQIZP3A5K6E/NQS_MIDWAY_AMEYALLI_VIEW+01_HERO+SHOT_FI.jpg?format=2500w");
+
+  /* Set a specific height */
+  min-height: 500px; 
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+    
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="myHeader">
+        <div class="navbar-brand">Ella <span style="color: #dfb162;">estat’e</span></div>
+        <ul class="navbar-menu">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/properties-page">properties</a></li>
+            <li><a href="/blogs">Blog</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </nav>
+    
+
+
+
+
+
+
+
+
+    <div class="containerslide">
+        <div class="carousel-container">
+            <button class="carousel-button prev" onclick="changeSlide(-1)">&#10094;</button>
+            <div class="carousel-slide">
+                <img th:src="@{/images/home2.jpg}" alt="Slide 1">
+                <img th:src="@{/images/image-c1.jpg}" alt="Slide 2">
+                <img th:src="@{/images/prop10.png}" alt="Slide 3">
+                <img th:src="@{/images/buy7.jpg}" alt="Slide 4">
+            </div>
+            <button class="carousel-button next" onclick="changeSlide(1)">&#10095;</button>
+        </div>
+
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 style="color: #1A4A5A;">Discover Your <br> Dream Home with Us!</h1>
+                <p>Since 1989, we have inspired fragments of your life stories with the finest kitchens, wardrobes,
+                    bedroom sets, and living & dining.</p>
+                <!-- <button class="cta-button">Know More</button> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="parallax" style="margin-top: 65px;"></div>
+    <div class="container">
+        <h1>Awesome place & what improves explore radiance.</h1>
+        <div class="card-container">
+            <div class="card">
+                <div class="card-image" id="residential">
+                    <img th:src="@{/images/a1.jpg}" alt="Residential Interiors">
+                </div>
+                <div class="card-content">
+                    <h2 style="color: white;">Villas</h2>
+                    <p>Proactively envisioned multimedia based expertise and cross-media growth strategies.</p>
+                    <a href="#">Read more</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-image" id="office">
+                    <img th:src="@{/images/a2.jpg}" alt="Office Designs">
+                </div>
+                <div class="card-content">
+                    <h2 style="color: #fff;">Apartments</h2>
+                    <p>Proactively envisioned multimedia based expertise and cross-media growth strategies.</p>
+                    <a href="#">Read more</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-image" id="commercial">
+                    <img th:src="@{/images/a3.jpg}" alt="Commercial Interiors">
+                </div>
+                <div class="card-content">
+                    <h2 style="color: white;">Duplexes</h2>
+                    <p>Proactively envisioned multimedia based expertise and cross-media growth strategies.</p>
+                    <a href="#">Read more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container2">
+        <h1>Explore Our Categories & Places</h1>
+        <p>Osed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui
+            dolorem ipsum quia dolor sit amet, consectetur, adipisci sed quia non numquam qui ratione voluptatem sequi
+            nesciunt.</p>
+
+        <div class="services">
+            <div class="service">
+                <i class="fas fa-building"></i>
+                <h2>Land</h2>
+
+            </div>
+            <div class="service">
+                <i class="fas fa-home"></i>
+                <h2>Residential</h2>
+
+            </div>
+            <div class="service">
+                <i class="fas fa-building"></i>
+                <h2>Commercial</h2>
+
+            </div>
+            <div class="service">
+                <i class="fa-solid fa-industry"></i>
+                <h2>Industrial</h2>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="parallax2"></div>
+    <section class="testimonials">
+        <h2>Clients <span>We Help</span></h2>
+        <div class="testimonial-slider">
+            <div class="testimonial">
+                <div class="quote-icon">❝</div>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
+                    the blind texts.</p>
+                <div class="testimonial-author">
+                    <img th:src="@{/images/person1.jpg}" alt="Roger Scott">
+                    <div class="author-info">
+                        <h3>Roger Scott</h3>
+                        <span>Tenant</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="quote-icon">❝</div>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
+                    the blind texts.</p>
+                <div class="testimonial-author">
+                    <img th:src="@{/images/person2.jpeg}" alt="Roger Scott">
+                    <div class="author-info">
+                        <h3>Shanti Mukti</h3>
+                        <span>Client</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="quote-icon">❝</div>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
+                    the blind texts.</p>
+                <div class="testimonial-author">
+                    <img th:src="@{/images/person3.avif}" alt="Roger Scott">
+                    <div class="author-info">
+                        <h3>Henry Cotch</h3>
+                        <span>Manager</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="quote-icon">❝</div>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
+                    the blind texts.</p>
+                <div class="testimonial-author">
+                    <img th:src="@{/images/person4.jpg}" alt="Roger Scott">
+                    <div class="author-info">
+                        <h3>smitha Scott</h3>
+                        <span>Advisor</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h2>Ella estat’e</h2>
+                <p>Ella estat'e is a WordPress theme to build Real Estate websites. It has good features and you will
+                    love.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">About Gaille</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Testinomials</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>(1800) 574 9687</p>
+                <p>198 West 21th Street, Visakhapatnam</p>
+                <p>Email: <a href="mailto:info@ellaestate.com">info@ellaestate.com</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Get Special offers & Discounts</p>
+                <form action="#">
+                    <input type="email" placeholder="Enter your email address">
+                    <button type="submit" style="color: black;">SUBSCRIBE</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; Templates Hub</p>
+        </div>
+    </footer>
+
+
+
+
+
+
+    <script>
+
+        /* for header */
+        window.onscroll = function () { myFunction() };
+
+        var header = document.getElementById("myHeader");
+        var sticky = header.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+
+
+
+        /* for slides */
+        let slideIndex = 0;
+
+        function changeSlide(direction) {
+            const slides = document.querySelectorAll('.carousel-slide img');
+            const totalSlides = slides.length;
+
+            slideIndex += direction;
+
+            if (slideIndex >= totalSlides) {
+                slideIndex = 0;
+            } else if (slideIndex < 0) {
+                slideIndex = totalSlides - 1;
+            }
+
+            document.querySelector('.carousel-slide').style.transform = `translateX(-${slideIndex * 100}%)`;
+        }
+
+        // Optional: Auto-play
+        setInterval(() => changeSlide(1), 3000);
+
+
+        const services = document.querySelectorAll('.service');
+
+        services.forEach(service => {
+            service.addEventListener('mouseover', () => {
+                service.style.transform = 'translateY(-5px)';
+            });
+
+            service.addEventListener('mouseout', () => {
+                service.style.transform = 'translateY(0)';
+            });
+        });
+        const gallery = document.querySelector('.gallery');
+
+        function scrollLeft() {
+            gallery.scrollBy({ left: -320, behavior: 'smooth' });
+        }
+
+        function scrollRight() {
+            gallery.scrollBy({ left: 320, behavior: 'smooth' });
+        }
+
+        document.querySelector('.scroll-button.left').addEventListener('click', scrollLeft);
+        document.querySelector('.scroll-button.right').addEventListener('click', scrollRight);
+
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.testimonial');
+        const totalSlides = slides.length;
+
+        const showSlide = (index) => {
+            slides.forEach((slide, i) => {
+                slide.style.display = i === index ? 'block' : 'none';
+            });
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showSlide(currentSlide);
+
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                showSlide(currentSlide);
+            }, 5000); // Change slide every 5 seconds
+        });
+
+
+    </script>
+</body>
+</html>

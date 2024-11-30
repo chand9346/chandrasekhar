@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adding items</title>
+    <style>
+         body {
+            background-color: #18445550;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* navbar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #1A4A5A;
+            padding: 0 20px;
+            color: black;
+        }
+
+        .navbar-brand {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .navbar-menu {
+            list-style: none;
+            display: flex;
+            margin: 15px;
+            padding: 5px;
+        }
+
+        .navbar-menu li {
+            margin: 0 15px;
+        }
+
+        .navbar-menu li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            transition: color 0.3s;
+        }
+
+        .navbar-menu li a:hover {
+            color: #ffcc00;
+        }
+
+        .navbar-search {
+            position: relative;
+        }
+
+        .navbar-search input {
+            padding: 5px;
+            border: none;
+            border-radius: 3px;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="myHeader">
+        <div class="navbar-brand">Ella <span style="color: #dfb162;">estat’e</span></div>
+        <ul class="navbar-menu">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/properties">properties</a></li>
+            <li><a href="/blogs">Blog</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Add Product</a></li>
+        </ul>
+    </nav>
+
+    <div class="add-elements">
+        <form action="" method="POST">
+            <input type="text" name="prductname" placeholder="property name">
+            <input type="text" name="type" placeholder="property type">
+            <input type="text" name="beds" placeholder="beds">
+            <input type="text" name="baths" placeholder="baths">
+            <input type="text" name="squarefeet" placeholder="square feet">
+            <input type="text" name="price" placeholder="price">
+             <input type="file" name="image">
+        </form>
+    </div>
+</body>
+</html>

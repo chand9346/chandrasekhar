@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Properties</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Properties</h1>
+
+    <div>
+        <a href="/properties?type=buy">Buy</a> |
+        <a href="/properties?type=sell">Sell</a> |
+        <a href="/properties?type=rent">Rent</a>
+    </div>
+
+    <div>
+        <h2>Property List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Property Name</th>
+                    <th>Type</th>
+                    <th>Beds Count</th>
+                    <th>Baths Count</th>
+                    <th>Square Feet</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="property : ${properties}">
+                    <td th:text="${property.propertyName}">Property Name</td>
+                    <td th:text="${property.propertyType}">Type</td>
+                    <td th:text="${property.bedsCount}">Beds Count</td>
+                    <td th:text="${property.bathsCount}">Baths Count</td>
+                    <td th:text="${property.sqrfeetRange}">Square Feet</td>
+                    <td th:text="${property.price}">Price</td>
+                    <td><img th:src="@{${property.imageUrl}}" alt="Property Image" width="100" height="100"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
