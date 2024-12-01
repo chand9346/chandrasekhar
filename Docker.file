@@ -1,0 +1,4 @@
+FROM openjdk:8
+EXPOSE 8082
+ADD target/chandrasekhar.war chandrasekhar.war
+ENTRYPOINT ["java","-jar","/chandrasekhar.war"]
